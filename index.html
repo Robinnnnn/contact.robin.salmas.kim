@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact information and ways to reach me">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+
+  <title>Contact — Salma Kim</title>
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="styles.css" as="style">
+  <link rel="preload" href="config.js" as="script">
+  <link rel="preload" href="app.js" as="script">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Favicon (optional: replace with your own) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👋</text></svg>">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <h1 class="name" id="name"></h1>
+      <p class="tagline" id="tagline"></p>
+    </header>
+
+    <!-- Local Context (Time/Weather) -->
+    <section class="local-context" id="local-context" aria-label="Local information">
+      <div class="local-time" id="local-time"></div>
+      <div class="local-weather" id="local-weather">
+        <button
+          type="button"
+          class="weather-toggle"
+          id="weather-toggle"
+          aria-label="Load local weather"
+        >
+          Load weather
+        </button>
+        <div class="weather-display" id="weather-display" hidden></div>
+      </div>
+    </section>
+
+    <!-- Search/Filter -->
+    <div class="search-container" id="search-container">
+      <label for="search-input" class="visually-hidden">Filter contacts</label>
+      <input
+        type="search"
+        id="search-input"
+        class="search-input"
+        placeholder="Filter..."
+        autocomplete="off"
+        aria-controls="contacts-list"
+      >
+      <button
+        type="button"
+        class="search-clear"
+        id="search-clear"
+        aria-label="Clear search"
+        hidden
+      >
+        ×
+      </button>
+    </div>
+
+    <!-- Contact Methods -->
+    <main id="contacts-list" aria-label="Contact methods">
+      <!-- Rendered by JavaScript -->
+    </main>
+
+    <!-- Show More Toggle -->
+    <div class="show-more-container" id="show-more-container" hidden>
+      <button
+        type="button"
+        class="show-more-btn"
+        id="show-more-btn"
+        aria-expanded="false"
+      >
+        <span class="show-more-text">Show more</span>
+        <span class="show-more-icon" aria-hidden="true">↓</span>
+      </button>
+    </div>
+
+    <!-- QR Code -->
+    <aside class="qr-section" id="qr-section" aria-label="QR code for this page">
+      <details class="qr-details">
+        <summary class="qr-summary">
+          <span class="qr-label">QR Code</span>
+        </summary>
+        <div class="qr-content">
+          <canvas id="qr-canvas" width="120" height="120"></canvas>
+          <p class="qr-hint">Scan to open this page</p>
+        </div>
+      </details>
+    </aside>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p class="privacy-note">No cookies · No tracking · No data stored</p>
+    </footer>
+  </div>
+
+  <!-- Toast for copy feedback -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+    Copied!
+  </div>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="qrcode.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
