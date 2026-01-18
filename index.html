@@ -3,114 +3,205 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Contact information and ways to reach me">
+  <meta name="description" content="Contact information for Robin">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
 
-  <title>Contact — Salma Kim</title>
+  <title>contact.robin.salmas.kim</title>
 
-  <!-- Preload critical resources -->
-  <link rel="preload" href="styles.css" as="style">
-  <link rel="preload" href="config.js" as="script">
-  <link rel="preload" href="app.js" as="script">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
-
-  <!-- Favicon (optional: replace with your own) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👋</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
 </head>
 <body>
-  <div class="container">
-    <!-- Header -->
-    <header class="header">
-      <h1 class="name" id="name"></h1>
-      <p class="tagline" id="tagline"></p>
-    </header>
+  <main>
+    <h1>contact robin ⋅.˳˳.⋅ॱ˙ॱ⋅.˳˳.⋅ॱ˙ॱ</h1>
 
-    <!-- Local Context (Time/Weather) -->
-    <section class="local-context" id="local-context" aria-label="Local information">
-      <div class="local-time" id="local-time"></div>
-      <div class="local-weather" id="local-weather">
-        <button
-          type="button"
-          class="weather-toggle"
-          id="weather-toggle"
-          aria-label="Load local weather"
-        >
-          Load weather
-        </button>
-        <div class="weather-display" id="weather-display" hidden></div>
+    <div class="status">
+      <div class="status-header">currently in</div>
+      <div class="status-line" id="statusLocation">denver, co</div>
+      <div class="status-line" id="statusTime"></div>
+    </div>
+
+    <nav>
+      <div class="row">
+        <span>email</span>
+        <a href="mailto:robin@salmas.kim" target="_blank" rel="noopener">robin@salmas.kim</a>
       </div>
-    </section>
 
-    <!-- Search/Filter -->
-    <div class="search-container" id="search-container">
-      <label for="search-input" class="visually-hidden">Filter contacts</label>
-      <input
-        type="search"
-        id="search-input"
-        class="search-input"
-        placeholder="Filter..."
-        autocomplete="off"
-        aria-controls="contacts-list"
-      >
-      <button
-        type="button"
-        class="search-clear"
-        id="search-clear"
-        aria-label="Clear search"
-        hidden
-      >
-        ×
-      </button>
+      <div class="row">
+        <span>phone</span>
+        <a href="tel:+16037701839" target="_blank" rel="noopener">1.603.770.1839</a>
+      </div>
+
+      <div class="row">
+        <span>signal</span>
+        <a href="https://signal.me/#p/+19175551234" target="_blank" rel="noopener">@robin.82</a>
+      </div>
+
+      <div class="row">
+        <span>telegram</span>
+        <a href="https://t.me/swaglord420" target="_blank" rel="noopener">@swaglord420</a>
+      </div>
+
+      <div class="row">
+        <span>instagram</span>
+        <a href="https://instagram.com/swaglord__420" target="_blank" rel="noopener">@swaglord__420</a>
+      </div>
+
+      <div class="row">
+        <span>xwitter</span>
+        <a href="https://x.com/swaglord__420" target="_blank" rel="noopener">@swaglord__420</a>
+      </div>
+
+      <div class="row">
+        <span>github</span>
+        <a href="https://github.com/Robinnnnn" target="_blank" rel="noopener">robinnnnn</a>
+      </div>
+
+      <div class="row">
+        <span>linkedin</span>
+        <a href="https://linkedin.com/in/robinnnnn" target="_blank" rel="noopener">robinnnnn</a>
+      </div>
+    </nav>
+
+    <a href="https://github.com/Robinnnnn/contact.robin.salmas.kim" target="_blank" rel="noopener" class="view-source">view source <span class="arrow">↗</span></a>
+  </main>
+
+  <!-- QR Code Button -->
+  <button class="qr-btn" aria-label="Show QR code" id="qrBtn">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="14" width="3" height="3"/><rect x="14" y="18" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/>
+    </svg>
+  </button>
+
+  <!-- QR Code Modal -->
+  <div class="qr-modal" id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrTitle">
+    <div class="qr-backdrop" id="qrBackdrop"></div>
+    <div class="qr-card">
+      <button class="qr-close" aria-label="Close" id="qrClose">&times;</button>
+      <h2 id="qrTitle" class="visually-hidden">QR Code</h2>
+      <div class="qr-code" id="qrCode" role="img" aria-label="QR code linking to this page"></div>
+      <div class="qr-url" id="qrUrl"></div>
     </div>
-
-    <!-- Contact Methods -->
-    <main id="contacts-list" aria-label="Contact methods">
-      <!-- Rendered by JavaScript -->
-    </main>
-
-    <!-- Show More Toggle -->
-    <div class="show-more-container" id="show-more-container" hidden>
-      <button
-        type="button"
-        class="show-more-btn"
-        id="show-more-btn"
-        aria-expanded="false"
-      >
-        <span class="show-more-text">Show more</span>
-        <span class="show-more-icon" aria-hidden="true">↓</span>
-      </button>
-    </div>
-
-    <!-- QR Code -->
-    <aside class="qr-section" id="qr-section" aria-label="QR code for this page">
-      <details class="qr-details">
-        <summary class="qr-summary">
-          <span class="qr-label">QR Code</span>
-        </summary>
-        <div class="qr-content">
-          <canvas id="qr-canvas" width="120" height="120"></canvas>
-          <p class="qr-hint">Scan to open this page</p>
-        </div>
-      </details>
-    </aside>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <p class="privacy-note">No cookies · No tracking · No data stored</p>
-    </footer>
   </div>
 
-  <!-- Toast for copy feedback -->
-  <div class="toast" id="toast" role="status" aria-live="polite" hidden>
-    Copied!
-  </div>
+  <script src="qr.js"></script>
+  <script>
+    (function() {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const statusItems = document.querySelectorAll('.status-header, .status-line');
+      const rows = document.querySelectorAll('.row');
+      const allItems = [...statusItems, ...rows];
 
-  <!-- Scripts -->
-  <script src="config.js"></script>
-  <script src="qrcode.js"></script>
-  <script src="app.js"></script>
+      if (prefersReducedMotion) {
+        allItems.forEach(item => item.classList.add('visible'));
+      } else {
+        requestAnimationFrame(() => {
+          allItems.forEach((item, i) => {
+            setTimeout(() => item.classList.add('visible'), i * 75);
+          });
+        });
+      }
+    })();
+
+    // Status strip
+    (function() {
+      const ROBIN_TZ = 'America/Denver';
+      const DENVER_LAT = 39.7392;
+      const DENVER_LNG = -104.9903;
+      const locationEl = document.getElementById('statusLocation');
+      const timeEl = document.getElementById('statusTime');
+
+      // Weather code to description mapping
+      const weatherCodes = {
+        0: 'clear sky', 1: 'mainly clear', 2: 'partly cloudy', 3: 'overcast',
+        45: 'fog', 48: 'fog', 51: 'drizzle', 53: 'drizzle', 55: 'drizzle',
+        56: 'drizzle', 57: 'drizzle', 61: 'rain', 63: 'rain', 65: 'rain',
+        66: 'rain', 67: 'rain', 71: 'snow', 73: 'snow', 75: 'snow', 77: 'snow',
+        80: 'rain', 81: 'rain', 82: 'rain', 85: 'snow', 86: 'snow',
+        95: 'thunderstorm', 96: 'thunderstorm', 99: 'thunderstorm'
+      };
+
+      function getWeatherIcon(description, isDay) {
+        const d = (description || '').toLowerCase();
+        const t = isDay ? 'd' : 'n';
+        if (d.includes('clear') || d.includes('mainly clear')) return `01${t}`;
+        if (d.includes('partly cloudy')) return `02${t}`;
+        if (d.includes('overcast')) return `03${t}`;
+        if (d.includes('fog')) return `50${t}`;
+        if (d.includes('drizzle')) return `09${t}`;
+        if (d.includes('rain')) return `10${t}`;
+        if (d.includes('snow')) return `13${t}`;
+        if (d.includes('thunderstorm')) return `11${t}`;
+        return `01${t}`;
+      }
+
+      function isDayTime() {
+        const now = new Date();
+        const hour = parseInt(new Intl.DateTimeFormat('en-US', {
+          timeZone: ROBIN_TZ, hour: 'numeric', hour12: false
+        }).format(now), 10);
+        return hour >= 6 && hour < 18;
+      }
+
+      async function fetchWeather() {
+        try {
+          const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${DENVER_LAT}&longitude=${DENVER_LNG}&current=weather_code,temperature_2m&temperature_unit=fahrenheit`);
+          const data = await res.json();
+          const description = weatherCodes[data.current.weather_code] || 'clear';
+          const temp = Math.round(data.current.temperature_2m);
+          const iconCode = getWeatherIcon(description, isDayTime());
+          const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
+          locationEl.innerHTML = `denver, co ${temp}°f <img src="${iconUrl}" alt="${description}" class="weather-icon">`;
+        } catch {
+          // silently fail, keep default text
+        }
+      }
+
+      function updateTime() {
+        const now = new Date();
+
+        // Robin's local time
+        const robinTime = new Intl.DateTimeFormat('en-US', {
+          timeZone: ROBIN_TZ,
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: false
+        }).format(now);
+
+        const robinTzAbbr = new Intl.DateTimeFormat('en-US', {
+          timeZone: ROBIN_TZ,
+          timeZoneName: 'short'
+        }).formatToParts(now).find(p => p.type === 'timeZoneName')?.value.toLowerCase() || 'pst';
+
+        // Calculate timezone delta
+        const visitorTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const deltaHours = getTimezoneDeltaHours(now, ROBIN_TZ, visitorTz);
+
+        let timeText = `${robinTime} ${robinTzAbbr}`;
+        if (deltaHours !== 0) {
+          const direction = deltaHours > 0 ? 'behind' : 'ahead';
+          timeText += ` (${Math.abs(deltaHours)}h ${direction})`;
+        }
+
+        timeEl.textContent = timeText;
+      }
+
+      function getTimezoneDeltaHours(date, tz1, tz2) {
+        // Returns how many hours tz2 is ahead of tz1
+        const getOffset = (tz) => {
+          const utc = new Date(date.toLocaleString('en-US', { timeZone: 'UTC' }));
+          const local = new Date(date.toLocaleString('en-US', { timeZone: tz }));
+          return (local - utc) / 3600000;
+        };
+        const delta = getOffset(tz2) - getOffset(tz1);
+        return Math.round(delta);
+      }
+
+      fetchWeather();
+      updateTime();
+      setInterval(updateTime, 60000);
+    })();
+  </script>
 </body>
 </html>
