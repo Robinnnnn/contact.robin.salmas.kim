@@ -2,7 +2,7 @@
   // Minimal QR Code generator (supports up to ~100 chars with error correction Q)
   // Based on qr-creator approach - generates SVG output
 
-  const EC_LEVEL = 'Q'; // High error correction for screen scanning
+  const EC_LEVEL = 'L'; // Low error correction - denser QR for short URLs
 
   // QR Code generation using the QR Code Model 2 specification
   function generateQR(text) {
@@ -70,8 +70,8 @@
     }
 
     getVersion(dataLength) {
-      // Simplified: use version based on data capacity with EC level Q
-      const capacities = [0, 13, 22, 34, 48, 62, 76, 92, 110, 130, 151];
+      // Simplified: use version based on data capacity with EC level L
+      const capacities = [0, 19, 34, 55, 80, 108, 136, 156, 194, 232, 274];
       const bytesNeeded = Math.ceil(dataLength / 8);
       for (let v = 1; v <= 10; v++) {
         if (capacities[v] >= bytesNeeded) return v;
@@ -167,8 +167,8 @@
     }
 
     addErrorCorrection(data, version) {
-      // Simplified: pad data to required length
-      const capacities = [0, 104, 176, 272, 384, 496, 608, 704, 816, 928, 1040];
+      // Simplified: pad data to required length (EC level L capacities in bits)
+      const capacities = [0, 152, 272, 440, 640, 864, 1088, 1248, 1552, 1856, 2192];
       const totalBits = capacities[version];
 
       // Pad with alternating bytes
@@ -204,17 +204,17 @@
     }
 
     applyBestMask(modules, size) {
-      // Apply mask 0 for simplicity (checkerboard)
+      // Apply mask 3: (row + col) % 3 === 0 - looks more organic than checkerboard
       for (let row = 0; row < size; row++) {
         for (let col = 0; col < size; col++) {
           if (this.isDataModule(row, col, size)) {
-            if ((row + col) % 2 === 0) {
+            if ((row + col) % 3 === 0) {
               modules[row][col] ^= 1;
             }
           }
         }
       }
-      return 0;
+      return 3;
     }
 
     isDataModule(row, col, size) {
@@ -227,8 +227,8 @@
     }
 
     addFormatInfo(modules, size, mask) {
-      // Format info for EC level Q and mask 0
-      const formatBits = [1,0,1,0,1,0,0,0,0,0,1,0,0,1,0];
+      // Format info for EC level L and mask 3
+      const formatBits = [1,1,1,1,0,0,0,1,0,0,1,1,1,0,1];
 
       for (let i = 0; i < 6; i++) {
         modules[8][i] = formatBits[i];

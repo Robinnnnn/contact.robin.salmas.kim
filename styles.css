@@ -5,12 +5,13 @@
 }
 
 :root {
-  --bg: #fff;
-  --text-primary: #111;
-  --text-secondary: #555;
-  --text-tertiary: #888;
-  --text-status: #666;
-  --border: #ddd;
+  --bg: #f7f7f7;
+  --text-primary: #111111;
+  --text-secondary: #5f6368;
+  --text-tertiary: #6b7280;
+  --text-status: #6b7280;
+  --text-accent: #d81b60;
+  --border: #e5e7eb;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,8 +21,30 @@
     --text-secondary: #a8aeb6;
     --text-tertiary: #7e8791;
     --text-status: #9ba2ab;
+    --text-accent: #f2a6c2;
     --border: #333;
   }
+}
+
+/* Manual theme overrides */
+[data-theme="light"] {
+  --bg: #f7f7f7;
+  --text-primary: #111111;
+  --text-secondary: #5f6368;
+  --text-tertiary: #6b7280;
+  --text-status: #6b7280;
+  --text-accent: #d81b60;
+  --border: #e5e7eb;
+}
+
+[data-theme="dark"] {
+  --bg: #111;
+  --text-primary: #ececec;
+  --text-secondary: #a8aeb6;
+  --text-tertiary: #7e8791;
+  --text-status: #9ba2ab;
+  --text-accent: #f2a6c2;
+  --border: #333;
 }
 
 body {
@@ -33,6 +56,11 @@ body {
   margin: 0 auto;
   background: var(--bg);
   color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, .status, .status-line, .row, .row span, .row a, .view-source, .util-btn, .qr-card, .qr-url, .location-name {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 h1 {
@@ -44,7 +72,9 @@ h1 {
 }
 
 .status {
-  margin-bottom: 16px;
+  border-left: 1px solid var(--border);
+  padding-left: 14px;
+  margin-bottom: 32px;
 }
 
 .status-header,
@@ -60,7 +90,7 @@ h1 {
 
 .status-header {
   font-size: 14px;
-  color: var(--text-tertiary);
+  color: var(--text-status);
   line-height: 1.4;
   margin-bottom: 2px;
 }
@@ -69,6 +99,10 @@ h1 {
   font-size: 14px;
   color: var(--text-status);
   line-height: 1.4;
+}
+
+.location-name {
+  color: var(--text-accent);
 }
 
 .weather-icon {
@@ -83,6 +117,7 @@ h1 {
 nav {
   display: flex;
   flex-direction: column;
+  margin-bottom: 32px;
 }
 
 .row {
@@ -138,7 +173,6 @@ nav {
 
 .view-source {
   display: block;
-  margin-top: 24px;
   font-size: 14px;
   color: var(--text-secondary);
   text-decoration: none;
@@ -153,10 +187,6 @@ nav {
 }
 
 @media (max-width: 480px) {
-  .qr-btn {
-    display: flex;
-  }
-
   body {
     padding: 40px 20px 20px;
   }
@@ -179,12 +209,16 @@ nav {
   }
 }
 
-/* QR Button - mobile only */
-.qr-btn {
-  display: none;
+/* Utility Buttons */
+.utility-buttons {
   position: fixed;
   bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   right: calc(20px + env(safe-area-inset-right, 0px));
+  display: flex;
+  gap: 10px;
+}
+
+.util-btn {
   width: 44px;
   height: 44px;
   display: flex;
@@ -197,13 +231,28 @@ nav {
   color: var(--text-primary);
 }
 
-.qr-btn:hover {
+.util-btn:hover {
   border-color: var(--text-secondary);
 }
 
-.qr-btn:focus {
+.util-btn:focus {
   outline: none;
 }
+
+/* Theme toggle icons - show moon in light mode, sun in dark mode */
+.icon-sun { display: none; }
+.icon-moon { display: block; }
+
+@media (prefers-color-scheme: dark) {
+  .icon-sun { display: block; }
+  .icon-moon { display: none; }
+}
+
+/* Override for manual theme */
+[data-theme="light"] .icon-sun { display: none; }
+[data-theme="light"] .icon-moon { display: block; }
+[data-theme="dark"] .icon-sun { display: block; }
+[data-theme="dark"] .icon-moon { display: none; }
 
 /* QR Modal */
 .qr-modal {

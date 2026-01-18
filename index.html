@@ -7,19 +7,20 @@
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
 
-  <title>Contact Robin</title>
+  <title>contact robin</title>
 
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
 </head>
 <body>
   <main>
-    <h1>contact robin ⋅.˳˳.⋅ॱ˙ॱ⋅.˳˳.⋅ॱ˙ॱ</h1>
+    <h1>contact robin 𓂃𓂂𖡼.𖤣𖥧𓈒◌܀</h1>
 
     <div class="status">
-      <div class="status-header">currently in</div>
-      <div class="status-line" id="statusLocation">denver, co</div>
+      <div class="status-line">currently in</div>
+      <div class="status-line" id="statusLocation"><span class="location-name">denver, co</span></div>
       <div class="status-line" id="statusTime"></div>
+      <div class="status-line" id="statusActivity"></div>
     </div>
 
     <nav>
@@ -67,12 +68,22 @@
     <a href="https://github.com/Robinnnnn/contact.robin.salmas.kim" target="_blank" rel="noopener" class="view-source">view source <span class="arrow">↗</span></a>
   </main>
 
-  <!-- QR Code Button -->
-  <button class="qr-btn" aria-label="Show QR code" id="qrBtn">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="14" width="3" height="3"/><rect x="14" y="18" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/>
-    </svg>
-  </button>
+  <!-- Utility Buttons -->
+  <div class="utility-buttons" id="utilityButtons">
+    <button class="util-btn" aria-label="Toggle theme" title="Toggle theme" id="themeBtn">
+      <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+    <button class="util-btn" aria-label="Show QR code" id="qrBtn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="14" width="3" height="3"/><rect x="14" y="18" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/>
+      </svg>
+    </button>
+  </div>
 
   <!-- QR Code Modal -->
   <div class="qr-modal" id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrTitle">
@@ -109,8 +120,16 @@
       const ROBIN_TZ = 'America/Denver';
       const DENVER_LAT = 39.7392;
       const DENVER_LNG = -104.9903;
+      const WEATHER_CACHE_KEY = 'weather_cache';
+      const WEATHER_CACHE_TTL = 30 * 60 * 1000; // 30 minutes
       const locationEl = document.getElementById('statusLocation');
       const timeEl = document.getElementById('statusTime');
+      const activityEl = document.getElementById('statusActivity');
+
+      // Countries that use Fahrenheit: US, Bahamas, Cayman Islands, Liberia, Palau, Marshall Islands, Micronesia
+      const FAHRENHEIT_REGIONS = ['US', 'BS', 'KY', 'LR', 'PW', 'MH', 'FM'];
+      const visitorRegion = navigator.language.split('-')[1] || '';
+      const usesFahrenheit = FAHRENHEIT_REGIONS.includes(visitorRegion);
 
       // Weather code to description mapping
       const weatherCodes = {
@@ -144,15 +163,56 @@
         return hour >= 6 && hour < 18;
       }
 
+      function getActivity(hour, dayOfWeek) {
+        // dayOfWeek: 0 = Sunday, 6 = Saturday
+        const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5;
+
+        // Sleeping: 1am - 9am
+        if (hour >= 1 && hour < 9) return 'prob sleeping';
+
+        // Meeting: 10am - 6pm on weekdays
+        if (isWeekday && hour >= 10 && hour < 18) return 'prob in a meeting';
+
+        // Awake: all other times
+        return 'prob awake';
+      }
+
+      function renderWeather(weatherCode, tempCelsius) {
+        const description = weatherCodes[weatherCode] || 'clear';
+        const iconCode = getWeatherIcon(description, isDayTime());
+        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
+        const temp = usesFahrenheit ? Math.round(tempCelsius * 9/5 + 32) : Math.round(tempCelsius);
+        const unit = usesFahrenheit ? 'f' : 'c';
+        locationEl.innerHTML = `<span class="location-name">denver, co</span> ${temp}°${unit} <img src="${iconUrl}" alt="${description}" class="weather-icon">`;
+      }
+
       async function fetchWeather() {
+        // Check cache first
         try {
-          const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${DENVER_LAT}&longitude=${DENVER_LNG}&current=weather_code,temperature_2m&temperature_unit=fahrenheit`);
+          const cached = JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY));
+          if (cached && Date.now() - cached.timestamp < WEATHER_CACHE_TTL && cached.tempCelsius !== undefined) {
+            renderWeather(cached.weatherCode, cached.tempCelsius);
+            return;
+          }
+        } catch {
+          // Invalid cache, continue to fetch
+        }
+
+        // Fetch from API (Celsius is the default unit)
+        try {
+          const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${DENVER_LAT}&longitude=${DENVER_LNG}&current=weather_code,temperature_2m`);
           const data = await res.json();
-          const description = weatherCodes[data.current.weather_code] || 'clear';
-          const temp = Math.round(data.current.temperature_2m);
-          const iconCode = getWeatherIcon(description, isDayTime());
-          const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
-          locationEl.innerHTML = `denver, co ${temp}°f <img src="${iconUrl}" alt="${description}" class="weather-icon">`;
+          const weatherCode = data.current.weather_code;
+          const tempCelsius = data.current.temperature_2m;
+
+          // Cache the result (always in Celsius for locale-independent storage)
+          localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({
+            timestamp: Date.now(),
+            weatherCode,
+            tempCelsius
+          }));
+
+          renderWeather(weatherCode, tempCelsius);
         } catch {
           // silently fail, keep default text
         }
@@ -161,13 +221,24 @@
       function updateTime() {
         const now = new Date();
 
-        // Robin's local time
-        const robinTime = new Intl.DateTimeFormat('en-US', {
+        // Robin's local time (12-hour format with single letter suffix)
+        const timeParts = new Intl.DateTimeFormat('en-US', {
           timeZone: ROBIN_TZ,
           hour: 'numeric',
           minute: '2-digit',
-          hour12: false
-        }).format(now);
+          hour12: true
+        }).formatToParts(now);
+        const hour = timeParts.find(p => p.type === 'hour')?.value;
+        const minute = timeParts.find(p => p.type === 'minute')?.value;
+        const period = timeParts.find(p => p.type === 'dayPeriod')?.value.charAt(0).toLowerCase();
+        const robinTime = `${hour}:${minute}${period}`;
+
+        const robinHour = parseInt(new Intl.DateTimeFormat('en-US', {
+          timeZone: ROBIN_TZ, hour: 'numeric', hour12: false
+        }).format(now), 10);
+
+        // Get day of week (0 = Sunday, 6 = Saturday)
+        const robinDayOfWeek = new Date(now.toLocaleString('en-US', { timeZone: ROBIN_TZ })).getDay();
 
         const robinTzAbbr = new Intl.DateTimeFormat('en-US', {
           timeZone: ROBIN_TZ,
@@ -185,6 +256,7 @@
         }
 
         timeEl.textContent = timeText;
+        activityEl.textContent = getActivity(robinHour, robinDayOfWeek);
       }
 
       function getTimezoneDeltaHours(date, tz1, tz2) {
@@ -201,6 +273,52 @@
       fetchWeather();
       updateTime();
       setInterval(updateTime, 60000);
+    })();
+
+    // Theme toggle
+    (function() {
+      const THEME_KEY = 'theme';
+      const themeBtn = document.getElementById('themeBtn');
+      const root = document.documentElement;
+
+      // Apply saved theme on load
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      if (savedTheme) {
+        root.setAttribute('data-theme', savedTheme);
+      }
+
+      // Get current effective theme
+      function getCurrentTheme() {
+        const dataTheme = root.getAttribute('data-theme');
+        if (dataTheme) return dataTheme;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      // Toggle theme on click
+      themeBtn.addEventListener('click', () => {
+        const current = getCurrentTheme();
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem(THEME_KEY, next);
+      });
+
+      // Long-press to reset to system theme
+      let pressTimer;
+      themeBtn.addEventListener('mousedown', () => {
+        pressTimer = setTimeout(() => {
+          root.removeAttribute('data-theme');
+          localStorage.removeItem(THEME_KEY);
+        }, 800);
+      });
+      themeBtn.addEventListener('mouseup', () => clearTimeout(pressTimer));
+      themeBtn.addEventListener('mouseleave', () => clearTimeout(pressTimer));
+      themeBtn.addEventListener('touchstart', () => {
+        pressTimer = setTimeout(() => {
+          root.removeAttribute('data-theme');
+          localStorage.removeItem(THEME_KEY);
+        }, 800);
+      });
+      themeBtn.addEventListener('touchend', () => clearTimeout(pressTimer));
     })();
   </script>
 </body>
