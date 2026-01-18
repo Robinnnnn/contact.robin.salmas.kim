@@ -1,5 +1,3 @@
-# contact.robin.salmas.kim
-
 A minimal contact page.
 
 ## Features
@@ -14,7 +12,6 @@ A minimal contact page.
 ## Files
 
 ```
-contact.robin.salmas.kim/
 ├── index.html     # Page content and inline JS
 ├── styles.css     # All styles
 ├── qr.js          # QR code generator
@@ -31,3 +28,7 @@ python3 -m http.server 8000
 ## Deployment
 
 Static files - deploy anywhere (Cloudflare Pages, Vercel, Netlify, etc.)
+
+## Vibe Coding
+
+Using an AI assistant? See [AGENTS.md](./AGENTS.md) for codebase instructions.
