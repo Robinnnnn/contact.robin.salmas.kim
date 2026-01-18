@@ -25,6 +25,16 @@ python3 -m http.server 8000
 # visit http://localhost:8000
 ```
 
+## Setup (after cloning)
+
+Enable the pre-commit hook for automatic cache-busting:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+This auto-updates version query params on CSS/JS files when you commit changes.
+
 ## Deployment
 
 Static files - deploy anywhere (Cloudflare Pages, Vercel, Netlify, etc.)

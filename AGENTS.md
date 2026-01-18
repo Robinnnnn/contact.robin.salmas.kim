@@ -47,6 +47,16 @@ Instructions for AI coding assistants.
 - Weather from Open-Meteo API (free, no key)
 - Weather icons from OpenWeatherMap
 
+## Setup (after cloning)
+
+Enable the pre-commit hook for automatic cache-busting:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+This auto-updates `?v=` query params on CSS/JS files when you commit changes to `styles.css` or `qr.js`.
+
 ## Testing
 
 ```bash
