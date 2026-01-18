@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Auto-update cache-busting version when CSS or JS files change
+
+# Check if styles.css or qr.js are staged for commit
+if git diff --cached --name-only | grep -qE '(styles\.css|qr\.js)$'; then
+  VERSION=$(date +%Y%m%d%H%M%S)
+
+  # Update version in index.html
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS
+    sed -i '' "s/styles\.css?v=[^\"']*/styles.css?v=$VERSION/" index.html
+    sed -i '' "s/qr\.js?v=[^\"']*/qr.js?v=$VERSION/" index.html
+  else
+    # Linux
+    sed -i "s/styles\.css?v=[^\"']*/styles.css?v=$VERSION/" index.html
+    sed -i "s/qr\.js?v=[^\"']*/qr.js?v=$VERSION/" index.html
+  fi
+
+  # Add the updated index.html to the commit
+  git add index.html
+
+  echo "Cache-busting version updated to $VERSION"
+fi
