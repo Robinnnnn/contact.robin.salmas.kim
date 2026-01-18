@@ -59,22 +59,43 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h1, .status, .status-line, .row, .row span, .row a, .view-source, .util-btn, .qr-card, .qr-url, .location-name {
+h1, .status, .status-line, .row, .row span, .row a, .util-btn, .qr-card, .qr-url, .location-name {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 h1 {
   font-size: 18px;
   font-weight: normal;
-  color: var(--text-tertiary);
+  color: var(--text-primary);
   /* text-align: center; */
   margin-bottom: 32px;
 }
 
+.h1-decoration {
+  color: var(--text-tertiary);
+}
+
 .status {
-  border-left: 1px solid var(--border);
+  position: relative;
   padding-left: 14px;
   margin-bottom: 32px;
+}
+
+.status::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 0;
+  background: var(--text-tertiary);
+  animation: borderGrow 0.6s ease 0.15s forwards;
+}
+
+@keyframes borderGrow {
+  to {
+    height: 100%;
+  }
 }
 
 .status-header,
@@ -112,6 +133,12 @@ h1 {
   vertical-align: middle;
   margin-left: -2px;
   margin-top: -2px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.weather-icon.loaded {
+  opacity: 1;
 }
 
 nav {
@@ -152,6 +179,10 @@ nav {
   .status-line.visible {
     animation: none;
   }
+  .status::before {
+    height: 100%;
+    animation: none;
+  }
 }
 
 .row span {
@@ -171,19 +202,10 @@ nav {
   text-decoration: underline;
 }
 
-.view-source {
-  display: block;
+.source-icon {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   font-size: 14px;
-  color: var(--text-secondary);
-  text-decoration: none;
-}
-
-.view-source:hover {
-  text-decoration: underline;
-}
-
-.view-source .arrow {
-  font-size: 1.2em;
+  font-weight: 500;
 }
 
 @media (max-width: 480px) {
@@ -229,6 +251,7 @@ nav {
   border-radius: 0;
   cursor: pointer;
   color: var(--text-primary);
+  text-decoration: none;
 }
 
 .util-btn:hover {

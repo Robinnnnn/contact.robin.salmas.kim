@@ -14,7 +14,7 @@
 </head>
 <body>
   <main>
-    <h1>contact robin 𓂃𓂂𖡼.𖤣𖥧𓈒◌܀</h1>
+    <h1><span id="randomTitle">contact robin</span> <span class="h1-decoration">𓂃𓂂𖡼.𖤣𖥧𓈒◌܀</span></h1>
 
     <div class="status">
       <div class="status-line">currently in</div>
@@ -37,6 +37,11 @@
       <div class="row">
         <span>signal</span>
         <a href="https://signal.me/#p/+19175551234" target="_blank" rel="noopener">@robin.82</a>
+      </div>
+
+      <div class="row">
+        <span>whatsapp</span>
+        <a href="https://wa.me/16037701839" target="_blank" rel="noopener">1.603.770.1839</a>
       </div>
 
       <div class="row">
@@ -65,11 +70,13 @@
       </div>
     </nav>
 
-    <a href="https://github.com/Robinnnnn/contact.robin.salmas.kim" target="_blank" rel="noopener" class="view-source">view source <span class="arrow">↗</span></a>
   </main>
 
   <!-- Utility Buttons -->
   <div class="utility-buttons" id="utilityButtons">
+    <a class="util-btn" href="https://github.com/Robinnnnn/contact.robin.salmas.kim" target="_blank" rel="noopener" aria-label="View source" title="View source">
+      <span class="source-icon">{}</span>
+    </a>
     <button class="util-btn" aria-label="Toggle theme" title="Toggle theme" id="themeBtn">
       <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
@@ -98,6 +105,28 @@
 
   <script src="qr.js"></script>
   <script>
+    // Random title
+    (function() {
+      const titles = [
+        'contact robin',
+        'hmu',
+        'ping robin',
+        'holla',
+        'dm robin',
+        "rip robin's inbox",
+        "robin's pager",
+        "robin's beeper",
+        'send help',
+        "robin's batsignal",
+        'beep boop',
+        'bing bong',
+        'smoke signal',
+        'carrier pigeon'
+      ];
+      const titleEl = document.getElementById('randomTitle');
+      titleEl.textContent = titles[Math.floor(Math.random() * titles.length)];
+    })();
+
     (function() {
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const statusItems = document.querySelectorAll('.status-header, .status-line');
@@ -183,7 +212,7 @@
         const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
         const temp = usesFahrenheit ? Math.round(tempCelsius * 9/5 + 32) : Math.round(tempCelsius);
         const unit = usesFahrenheit ? 'f' : 'c';
-        locationEl.innerHTML = `<span class="location-name">denver, co</span> ${temp}°${unit} <img src="${iconUrl}" alt="${description}" class="weather-icon">`;
+        locationEl.innerHTML = `<span class="location-name">denver, co</span> ${temp}°${unit} <img src="${iconUrl}" alt="${description}" class="weather-icon" onload="this.classList.add('loaded')">`;
       }
 
       async function fetchWeather() {
