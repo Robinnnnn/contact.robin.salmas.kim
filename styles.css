@@ -356,7 +356,7 @@ nav {
 }
 
 nav.hiding {
-  animation: slideUpFadeOut 0.3s ease forwards;
+  animation: slideUpFadeOut 0.15s ease forwards;
 }
 
 nav.hidden {
@@ -364,7 +364,7 @@ nav.hidden {
 }
 
 nav.showing {
-  animation: slideFadeIn 0.3s ease forwards;
+  animation: slideFadeIn 0.15s ease forwards;
 }
 
 /* QR Panel (inline, replaces contact list) */
@@ -381,12 +381,12 @@ nav.showing {
 
 .qr-panel.visible {
   display: flex;
-  animation: slideFadeIn 0.3s ease forwards;
+  animation: slideFadeIn 0.15s ease forwards;
 }
 
 .qr-panel.hiding {
   display: flex;
-  animation: slideUpFadeOut 0.3s ease forwards;
+  animation: slideUpFadeOut 0.15s ease forwards;
 }
 
 @keyframes slideUpFadeOut {

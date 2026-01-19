@@ -301,8 +301,8 @@
         setTimeout(() => {
           nav.classList.remove('showing');
           isAnimating = false;
-        }, 300);
-      }, 300);
+        }, 150);
+      }, 150);
     } else {
       // Switch to QR panel: nav slides up, QR slides down
       if (!qrGenerated) {
@@ -323,8 +323,8 @@
 
         setTimeout(() => {
           isAnimating = false;
-        }, 300);
-      }, 300);
+        }, 150);
+      }, 150);
     }
   }
 
