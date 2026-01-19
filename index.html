@@ -9,12 +9,12 @@
 
   <title>contact robin</title>
 
-  <link rel="stylesheet" href="styles.css?v=20260118231624">
+  <link rel="stylesheet" href="styles.css?v=20260118232445">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
 </head>
 <body>
   <main>
-    <h1><span id="randomTitle">contact robin</span> <span class="h1-decoration">𓂃𓂂𖡼.𖤣𖥧𓈒◌܀</span></h1>
+    <h1><span id="randomTitle">contact robin</span> <span class="h1-decoration">₊⁺‧₊｡･*.☆</span></h1>
 
     <div class="status">
       <div class="status-line">currently in</div>
@@ -436,6 +436,9 @@ nonce: 7f3c9a2d</pre>
       const THEME_KEY = 'theme';
       const themeBtn = document.getElementById('themeBtn');
       const root = document.documentElement;
+      const decoration = document.querySelector('.h1-decoration');
+      const LIGHT_DECORATION = '𓂃𓂂𖡼.𖤣𖥧𓈒◌܀';
+      const DARK_DECORATION = '₊⁺‧₊｡･*.☆';
 
       // Apply saved theme on load
       const savedTheme = localStorage.getItem(THEME_KEY);
@@ -450,12 +453,22 @@ nonce: 7f3c9a2d</pre>
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       }
 
+      // Update decoration based on theme
+      function updateDecoration() {
+        const theme = getCurrentTheme();
+        decoration.textContent = theme === 'dark' ? DARK_DECORATION : LIGHT_DECORATION;
+      }
+
+      // Set initial decoration
+      updateDecoration();
+
       // Toggle theme on click
       themeBtn.addEventListener('click', () => {
         const current = getCurrentTheme();
         const next = current === 'dark' ? 'light' : 'dark';
         root.setAttribute('data-theme', next);
         localStorage.setItem(THEME_KEY, next);
+        updateDecoration();
       });
 
       // Long-press to reset to system theme
@@ -464,6 +477,7 @@ nonce: 7f3c9a2d</pre>
         pressTimer = setTimeout(() => {
           root.removeAttribute('data-theme');
           localStorage.removeItem(THEME_KEY);
+          updateDecoration();
         }, 800);
       });
       themeBtn.addEventListener('mouseup', () => clearTimeout(pressTimer));
@@ -472,6 +486,7 @@ nonce: 7f3c9a2d</pre>
         pressTimer = setTimeout(() => {
           root.removeAttribute('data-theme');
           localStorage.removeItem(THEME_KEY);
+          updateDecoration();
         }, 800);
       });
       themeBtn.addEventListener('touchend', () => clearTimeout(pressTimer));
