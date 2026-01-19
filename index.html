@@ -323,8 +323,8 @@ nonce: 7f3c9a2d</pre>
         // dayOfWeek: 0 = Sunday, 6 = Saturday
         const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5;
 
-        // Sleeping: 1am - 9am
-        if (hour >= 1 && hour < 9) return 'prob sleeping';
+        // Sleeping: 12am - 9am
+        if (hour < 9) return 'prob sleeping';
 
         // Meeting: 10am - 6pm on weekdays
         if (isWeekday && hour >= 10 && hour < 18) return 'prob in a meeting';
