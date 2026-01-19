@@ -9,7 +9,7 @@
 
   <title>contact robin</title>
 
-  <link rel="stylesheet" href="styles.css?v=20260118223110">
+  <link rel="stylesheet" href="styles.css?v=20260118225930">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
 </head>
 <body>
@@ -176,6 +176,34 @@
     </div>
   </main>
 
+  <!-- Signature Panel (hidden by default) -->
+  <div class="signature-panel" id="signaturePanel">
+    <div class="signature-divider"></div>
+    <pre class="signature-message">this message was signed by robinkim.eth. below are my only official contact handles for this domain.
+
+domain: contact.robin.salmas.kim
+ens: robinkim.eth
+pgp: 3d59 8eec 5940 fce3 0aed  7e09 079d db36 4bd7 1b25
+
+email: robin@salmas.kim
+phone: +1 603 770 1839
+telegram: @swaglord420
+instagram: @swaglord__420
+x: @swaglord__420
+github: robinnnnn
+
+issued: 2026-01-18
+expires: 2031-01-18
+nonce: 7f3c9a2d</pre>
+    <div class="signature-divider"></div>
+    <code class="signature-full">0x0727fc4572ef8cd2cb9970bc8d3f214c66d2a72384b1b1a152b12b13a483b3f6411cfe9df2f3b8f04c686b58742779e6dc6d36b0acfc4248bfce96d57cd8fe081c</code>
+  </div>
+
+  <!-- Signature Spine -->
+  <button class="signature-spine" id="signatureSpine" aria-label="View signed message" title="View signed message">
+    <span class="sig-text">0x0727fc45...cd8fe081c</span>
+  </button>
+
   <!-- Utility Buttons -->
   <div class="utility-buttons" id="utilityButtons">
     <a class="util-btn" href="https://github.com/Robinnnnn/contact.robin.salmas.kim" target="_blank" rel="noopener" aria-label="View source" title="View source">
@@ -201,7 +229,7 @@
     </button>
   </div>
 
-  <script src="qr.js?v=20260118223110"></script>
+  <script src="qr.js?v=20260118225930"></script>
   <script>
     // Random title
     (function() {
@@ -541,6 +569,85 @@
           }
         });
       });
+    })();
+
+    // Signature spine toggle
+    (function() {
+      const sigSpine = document.getElementById('signatureSpine');
+      const sigPanel = document.getElementById('signaturePanel');
+      const contactNav = document.querySelector('nav:not(.finances-nav)');
+      const financesNav = document.getElementById('financesNav');
+      const qrPanel = document.getElementById('qrPanel');
+      const qrBtn = document.getElementById('qrBtn');
+      const financeBtn = document.getElementById('financeBtn');
+      let isAnimating = false;
+      let previousView = 'contact';
+
+      function staggerRows(nav, show) {
+        const rows = nav.querySelectorAll('.row');
+        rows.forEach((row, i) => {
+          if (show) {
+            setTimeout(() => row.classList.add('visible'), i * 50);
+          } else {
+            row.classList.remove('visible');
+          }
+        });
+        return rows.length;
+      }
+
+      function toggleSignature() {
+        if (isAnimating) return;
+
+        const isActive = sigPanel.classList.contains('visible');
+        isAnimating = true;
+
+        if (isActive) {
+          // Switch back to previous view
+          sigSpine.classList.remove('active');
+          sigPanel.classList.remove('visible');
+          sigPanel.classList.add('hiding');
+
+          setTimeout(() => {
+            sigPanel.classList.remove('hiding');
+
+            const targetNav = previousView === 'finances' ? financesNav : contactNav;
+            targetNav.classList.remove('hidden');
+            const rowCount = staggerRows(targetNav, true);
+
+            setTimeout(() => {
+              isAnimating = false;
+            }, rowCount * 50 + 150);
+          }, 150);
+        } else {
+          // Determine current view and hide it
+          const qrActive = qrPanel.classList.contains('visible');
+          const financesActive = !financesNav.classList.contains('hidden');
+
+          if (qrActive) {
+            previousView = 'contact'; // QR returns to contact
+            qrBtn.classList.remove('active');
+            qrPanel.classList.remove('visible');
+            qrPanel.classList.add('hiding');
+            setTimeout(() => qrPanel.classList.remove('hiding'), 150);
+          } else {
+            previousView = financesActive ? 'finances' : 'contact';
+            const currentNav = financesActive ? financesNav : contactNav;
+            staggerRows(currentNav, false);
+            setTimeout(() => currentNav.classList.add('hidden'), 100);
+          }
+
+          sigSpine.classList.add('active');
+
+          setTimeout(() => {
+            sigPanel.classList.add('visible');
+            setTimeout(() => {
+              isAnimating = false;
+            }, 150);
+          }, qrActive ? 150 : 100);
+        }
+      }
+
+      sigSpine.addEventListener('click', toggleSignature);
     })();
   </script>
 </body>

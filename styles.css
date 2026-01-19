@@ -518,3 +518,105 @@ nav.hidden {
     font-size: 12px;
   }
 }
+
+/* Signature Spine */
+.signature-spine {
+  position: fixed;
+  right: calc(20px + env(safe-area-inset-right, 0px));
+  bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 0;
+  z-index: 10;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sig-text {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.signature-spine:hover .sig-text {
+  color: var(--text-secondary);
+}
+
+.signature-spine:focus {
+  outline: none;
+}
+
+.signature-spine.active .sig-text {
+  color: var(--text-primary);
+}
+
+/* Signature Panel */
+.signature-panel {
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 0;
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.signature-panel.visible {
+  display: flex;
+  animation: slideFadeIn 0.15s ease forwards;
+}
+
+.signature-panel.hiding {
+  display: flex;
+  animation: slideUpFadeOut 0.15s ease forwards;
+}
+
+.signature-message {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.signature-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0;
+}
+
+.signature-panel .signature-divider:first-child {
+  margin-top: 0;
+}
+
+.signature-full {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--text-tertiary);
+  word-break: break-all;
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .signature-spine {
+    right: calc(20px + env(safe-area-inset-right, 0px));
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .sig-text {
+    font-size: 10px;
+  }
+
+  .signature-message {
+    font-size: 12px;
+  }
+}
