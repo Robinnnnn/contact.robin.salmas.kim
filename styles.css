@@ -349,22 +349,9 @@ nav {
   border-color: var(--text-primary);
 }
 
-/* Nav animation for toggle */
-nav {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-nav.hiding {
-  animation: slideUpFadeOut 0.15s ease forwards;
-}
-
+/* Nav hidden state for QR toggle */
 nav.hidden {
   display: none;
-}
-
-nav.showing {
-  animation: slideFadeIn 0.15s ease forwards;
 }
 
 /* QR Panel (inline, replaces contact list) */

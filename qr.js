@@ -278,8 +278,19 @@
   const qrPanel = document.getElementById('qrPanel');
   const qrCode = document.getElementById('qrCode');
   const qrUrl = document.getElementById('qrUrl');
+  const rows = nav.querySelectorAll('.row');
   let qrGenerated = false;
   let isAnimating = false;
+
+  function staggerRows(show) {
+    rows.forEach((row, i) => {
+      if (show) {
+        setTimeout(() => row.classList.add('visible'), i * 50);
+      } else {
+        row.classList.remove('visible');
+      }
+    });
+  }
 
   function toggleQR() {
     if (isAnimating) return;
@@ -288,7 +299,7 @@
     isAnimating = true;
 
     if (isActive) {
-      // Switch to contact list: QR slides up, nav slides down
+      // Switch to contact list: QR slides up, rows stagger in
       btn.classList.remove('active');
       qrPanel.classList.remove('visible');
       qrPanel.classList.add('hiding');
@@ -296,15 +307,14 @@
       setTimeout(() => {
         qrPanel.classList.remove('hiding');
         nav.classList.remove('hidden');
-        nav.classList.add('showing');
+        staggerRows(true);
 
         setTimeout(() => {
-          nav.classList.remove('showing');
           isAnimating = false;
-        }, 150);
+        }, rows.length * 50 + 150);
       }, 150);
     } else {
-      // Switch to QR panel: nav slides up, QR slides down
+      // Switch to QR panel: rows hide, QR slides down
       if (!qrGenerated) {
         const url = window.location.href;
         qrCode.innerHTML = generateQR(url);
@@ -314,17 +324,16 @@
       }
 
       btn.classList.add('active');
-      nav.classList.add('hiding');
+      staggerRows(false);
 
       setTimeout(() => {
-        nav.classList.remove('hiding');
         nav.classList.add('hidden');
         qrPanel.classList.add('visible');
 
         setTimeout(() => {
           isAnimating = false;
         }, 150);
-      }, 150);
+      }, 100);
     }
   }
 
