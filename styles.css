@@ -590,12 +590,12 @@ nav.hidden {
 
 .signature-panel.visible {
   display: flex;
-  animation: slideFadeIn 0.3s ease forwards;
+  animation: slideFadeIn 0.5s ease forwards;
 }
 
 .signature-panel.hiding {
   display: flex;
-  animation: slideUpFadeOut 0.3s ease forwards;
+  animation: slideUpFadeOut 0.5s ease forwards;
 }
 
 .signature-message {

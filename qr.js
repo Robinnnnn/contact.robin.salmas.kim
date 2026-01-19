@@ -277,6 +277,7 @@
   const btn = document.getElementById('qrBtn');
   const contactNav = document.querySelector('nav:not(.finances-nav)');
   const financesNav = document.getElementById('financesNav');
+  const financeBtn = document.getElementById('financeBtn');
   const qrPanel = document.getElementById('qrPanel');
   const qrCode = document.getElementById('qrCode');
   const qrUrl = document.getElementById('qrUrl');
@@ -289,7 +290,7 @@
     const rows = nav.querySelectorAll('.row');
     rows.forEach((row, i) => {
       if (show) {
-        setTimeout(() => row.classList.add('visible'), i * 50);
+        setTimeout(() => row.classList.add('visible'), i * 75);
       } else {
         row.classList.remove('visible');
       }
@@ -320,12 +321,15 @@
           }, 150);
         } else {
           const targetNav = previousView === 'finances' ? financesNav : contactNav;
+          if (previousView === 'finances') {
+            financeBtn.classList.add('active');
+          }
           targetNav.classList.remove('hidden');
           const rowCount = staggerRows(targetNav, true);
 
           setTimeout(() => {
             isAnimating = false;
-          }, rowCount * 50 + 150);
+          }, rowCount * 75 + 150);
         }
       }, 150);
     } else {
@@ -350,6 +354,9 @@
         setTimeout(() => sigPanel.classList.remove('hiding'), 150);
       } else {
         previousView = financesActive ? 'finances' : 'contact';
+        if (financesActive) {
+          financeBtn.classList.remove('active');
+        }
         const currentNav = financesActive ? financesNav : contactNav;
         staggerRows(currentNav, false);
         setTimeout(() => currentNav.classList.add('hidden'), 100);

@@ -9,7 +9,7 @@
 
   <title>contact robin</title>
 
-  <link rel="stylesheet" href="styles.css?v=20260119002431">
+  <link rel="stylesheet" href="styles.css?v=20260119003125">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
 </head>
 <body>
@@ -230,7 +230,7 @@ nonce: 7f3c9a2d</pre>
     </button>
   </div>
 
-  <script src="qr.js?v=20260119002431"></script>
+  <script src="qr.js?v=20260119003125"></script>
   <script>
     // Random title
     (function() {
@@ -508,6 +508,8 @@ nonce: 7f3c9a2d</pre>
       const financeBtn = document.getElementById('financeBtn');
       const contactNav = document.querySelector('nav:not(.finances-nav)');
       const financesNav = document.getElementById('financesNav');
+      const qrPanel = document.getElementById('qrPanel');
+      const qrBtn = document.getElementById('qrBtn');
       const contactRows = contactNav.querySelectorAll('.row');
       const financeRows = financesNav.querySelectorAll('.row');
       let isAnimating = false;
@@ -515,7 +517,7 @@ nonce: 7f3c9a2d</pre>
       function staggerRows(rows, show) {
         rows.forEach((row, i) => {
           if (show) {
-            setTimeout(() => row.classList.add('visible'), i * 50);
+            setTimeout(() => row.classList.add('visible'), i * 75);
           } else {
             row.classList.remove('visible');
           }
@@ -526,6 +528,7 @@ nonce: 7f3c9a2d</pre>
         if (isAnimating) return;
 
         const isFinancesActive = financeBtn.classList.contains('active');
+        const qrActive = qrPanel.classList.contains('visible');
         isAnimating = true;
 
         if (isFinancesActive) {
@@ -540,10 +543,17 @@ nonce: 7f3c9a2d</pre>
 
             setTimeout(() => {
               isAnimating = false;
-            }, contactRows.length * 50 + 150);
+            }, contactRows.length * 75 + 150);
           }, 100);
         } else {
-          // Switch to finances
+          // Switch to finances - close QR if open
+          if (qrActive) {
+            qrBtn.classList.remove('active');
+            qrPanel.classList.remove('visible');
+            qrPanel.classList.add('hiding');
+            setTimeout(() => qrPanel.classList.remove('hiding'), 150);
+          }
+
           financeBtn.classList.add('active');
           staggerRows(contactRows, false);
 
@@ -554,8 +564,8 @@ nonce: 7f3c9a2d</pre>
 
             setTimeout(() => {
               isAnimating = false;
-            }, financeRows.length * 50 + 150);
-          }, 100);
+            }, financeRows.length * 75 + 150);
+          }, qrActive ? 150 : 100);
         }
       }
 
@@ -614,7 +624,7 @@ nonce: 7f3c9a2d</pre>
         const rows = nav.querySelectorAll('.row');
         rows.forEach((row, i) => {
           if (show) {
-            setTimeout(() => row.classList.add('visible'), i * 50);
+            setTimeout(() => row.classList.add('visible'), i * 75);
           } else {
             row.classList.remove('visible');
           }
@@ -643,7 +653,7 @@ nonce: 7f3c9a2d</pre>
 
             setTimeout(() => {
               isAnimating = false;
-            }, rowCount * 50 + 150);
+            }, rowCount * 75 + 150);
           }, 150);
         } else {
           // Determine current view and hide it
