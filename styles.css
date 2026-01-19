@@ -410,3 +410,111 @@ nav.hidden {
   white-space: nowrap;
   text-align: center;
 }
+
+/* Finances Nav */
+.finances-nav {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32px;
+  transition: opacity 0.2s ease;
+}
+
+.finances-nav.hidden {
+  display: none;
+}
+
+.finances-nav .row {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Value with copy button - override .row span styles */
+.finances-nav .row > span:first-child {
+  width: 55%;
+  flex-shrink: 0;
+  padding-right: 16px;
+}
+
+.value-with-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: auto !important;
+  flex-shrink: 1;
+  padding-right: 0 !important;
+  min-width: 0;
+}
+
+.copyable-value {
+  color: var(--text-secondary) !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: auto !important;
+  flex-shrink: 1;
+  padding-right: 0 !important;
+}
+
+.copy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  top: -1px;
+}
+
+.copy-btn:hover {
+  color: var(--text-secondary);
+}
+
+.copy-btn:focus {
+  outline: none;
+}
+
+.copy-btn:active {
+  color: var(--text-tertiary);
+}
+
+.copy-btn .copy-icon {
+  display: block;
+}
+
+.copy-btn .check-icon {
+  display: none;
+  color: #22c55e;
+}
+
+.copy-btn.copied .copy-icon {
+  display: none;
+}
+
+.copy-btn.copied .check-icon {
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .finances-nav .row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    padding: 14px 0;
+  }
+
+  .finances-nav .row > span:first-child {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .copyable-value {
+    font-size: 12px;
+  }
+}

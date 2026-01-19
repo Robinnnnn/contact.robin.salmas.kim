@@ -275,14 +275,16 @@
 
   // DOM Elements
   const btn = document.getElementById('qrBtn');
-  const nav = document.querySelector('nav');
+  const contactNav = document.querySelector('nav:not(.finances-nav)');
+  const financesNav = document.getElementById('financesNav');
   const qrPanel = document.getElementById('qrPanel');
   const qrCode = document.getElementById('qrCode');
   const qrUrl = document.getElementById('qrUrl');
-  const rows = nav.querySelectorAll('.row');
   let isAnimating = false;
+  let previousView = 'contact'; // Track which view was active before QR
 
-  function staggerRows(show) {
+  function staggerRows(nav, show) {
+    const rows = nav.querySelectorAll('.row');
     rows.forEach((row, i) => {
       if (show) {
         setTimeout(() => row.classList.add('visible'), i * 50);
@@ -290,6 +292,7 @@
         row.classList.remove('visible');
       }
     });
+    return rows.length;
   }
 
   function toggleQR() {
@@ -299,33 +302,40 @@
     isAnimating = true;
 
     if (isActive) {
-      // Switch to contact list: QR slides up, rows stagger in
+      // Switch back to previous view: QR slides up, rows stagger in
       btn.classList.remove('active');
       qrPanel.classList.remove('visible');
       qrPanel.classList.add('hiding');
 
       setTimeout(() => {
         qrPanel.classList.remove('hiding');
-        nav.classList.remove('hidden');
-        staggerRows(true);
+
+        const targetNav = previousView === 'finances' ? financesNav : contactNav;
+        targetNav.classList.remove('hidden');
+        const rowCount = staggerRows(targetNav, true);
 
         setTimeout(() => {
           isAnimating = false;
-        }, rows.length * 50 + 150);
+        }, rowCount * 50 + 150);
       }, 150);
     } else {
-      // Switch to QR panel: rows hide, QR slides down
+      // Switch to QR panel: hide current view, QR slides down
       // Always regenerate QR to ensure correct theme colors
       const url = window.location.href;
       qrCode.innerHTML = generateQR(url);
       let displayUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
       qrUrl.textContent = displayUrl.length > 40 ? displayUrl.slice(0, 37) + '...' : displayUrl;
 
+      // Determine which view is currently active
+      const financesActive = !financesNav.classList.contains('hidden');
+      previousView = financesActive ? 'finances' : 'contact';
+      const currentNav = financesActive ? financesNav : contactNav;
+
       btn.classList.add('active');
-      staggerRows(false);
+      staggerRows(currentNav, false);
 
       setTimeout(() => {
-        nav.classList.add('hidden');
+        currentNav.classList.add('hidden');
         qrPanel.classList.add('visible');
 
         setTimeout(() => {
