@@ -256,7 +256,7 @@
       let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgSize} ${svgSize}">`;
       const dataTheme = document.documentElement.getAttribute('data-theme');
       const isDark = dataTheme === 'dark' || (dataTheme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-      const fgColor = isDark ? '#e5e5e5' : '#000';
+      const fgColor = isDark ? '#e5e5e5' : '#333';
 
       for (let row = 0; row < size; row++) {
         for (let col = 0; col < size; col++) {
