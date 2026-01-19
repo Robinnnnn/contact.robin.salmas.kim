@@ -18,7 +18,7 @@
 
     <div class="status">
       <div class="status-line">currently in</div>
-      <div class="status-line" id="statusLocation"><span class="location-name">denver, co</span></div>
+      <div class="status-line" id="statusLocation"><span class="location-name">irvine, ca</span></div>
       <div class="status-line" id="statusTime"></div>
       <div class="status-line" id="statusActivity"></div>
     </div>
@@ -273,9 +273,9 @@ nonce: 7f3c9a2d</pre>
 
     // Status strip
     (function() {
-      const ROBIN_TZ = 'America/Denver';
-      const DENVER_LAT = 39.7392;
-      const DENVER_LNG = -104.9903;
+      const ROBIN_TZ = 'America/Los_Angeles';
+      const IRVINE_LAT = 33.6846;
+      const IRVINE_LNG = -117.8265;
       const WEATHER_CACHE_KEY = 'weather_cache';
       const WEATHER_CACHE_TTL = 30 * 60 * 1000; // 30 minutes
       const locationEl = document.getElementById('statusLocation');
@@ -339,7 +339,7 @@ nonce: 7f3c9a2d</pre>
         const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
         const temp = usesFahrenheit ? Math.round(tempCelsius * 9/5 + 32) : Math.round(tempCelsius);
         const unit = usesFahrenheit ? 'f' : 'c';
-        locationEl.innerHTML = `<span class="location-name">denver, co</span> ${temp}°${unit} <img src="${iconUrl}" alt="${description}" class="weather-icon" onload="this.classList.add('loaded')">`;
+        locationEl.innerHTML = `<span class="location-name">irvine, ca</span> ${temp}°${unit} <img src="${iconUrl}" alt="${description}" class="weather-icon" onload="this.classList.add('loaded')">`;
       }
 
       async function fetchWeather() {
@@ -356,7 +356,7 @@ nonce: 7f3c9a2d</pre>
 
         // Fetch from API (Celsius is the default unit)
         try {
-          const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${DENVER_LAT}&longitude=${DENVER_LNG}&current=weather_code,temperature_2m`);
+          const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${IRVINE_LAT}&longitude=${IRVINE_LNG}&current=weather_code,temperature_2m`);
           const data = await res.json();
           const weatherCode = data.current.weather_code;
           const tempCelsius = data.current.temperature_2m;

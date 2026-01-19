@@ -65,8 +65,8 @@ Triggered by `.signature-spine` button (lines ~203-206) on right edge.
 
 ### Location & Timezone
 `index.html` in the inline `<script>` block:
-- `ROBIN_TZ` — Timezone (e.g., `'America/Denver'`)
-- `DENVER_LAT`, `DENVER_LNG` — Coordinates for weather API
+- `ROBIN_TZ` — Timezone (e.g., `'America/Los_Angeles'`)
+- `IRVINE_LAT`, `IRVINE_LNG` — Coordinates for weather API
 - Status text updates in `fetchWeather()` and `updateTime()`
 
 ### Colors
