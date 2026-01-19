@@ -107,6 +107,24 @@ h1 {
 
 .h1-decoration {
   color: var(--text-tertiary);
+  margin-left: 6px;
+}
+
+.h1-decoration .char {
+  display: inline-block;
+  opacity: 0;
+  animation: charFadeIn 0.4s ease forwards;
+}
+
+@keyframes charFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .status {
@@ -165,8 +183,8 @@ h1 {
   width: 20px;
   height: 20px;
   vertical-align: middle;
-  margin-left: -2px;
-  margin-top: -2px;
+  margin-left: -4px;
+  margin-top: -4px;
   opacity: 0;
   transition: opacity 0.5s ease;
 }
@@ -224,6 +242,11 @@ nav {
   }
   .sig-text {
     clip-path: none;
+    animation: none;
+  }
+  .h1-decoration .char {
+    opacity: 1;
+    transform: none;
     animation: none;
   }
 }

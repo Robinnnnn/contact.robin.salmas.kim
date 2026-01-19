@@ -9,7 +9,7 @@
 
   <title>contact robin</title>
 
-  <link rel="stylesheet" href="styles.css?v=20260118232445">
+  <link rel="stylesheet" href="styles.css?v=20260118234033">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
 </head>
 <body>
@@ -230,7 +230,7 @@ nonce: 7f3c9a2d</pre>
     </button>
   </div>
 
-  <script src="qr.js?v=20260118231624"></script>
+  <script src="qr.js?v=20260118234033"></script>
   <script>
     // Random title
     (function() {
@@ -453,10 +453,21 @@ nonce: 7f3c9a2d</pre>
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       }
 
-      // Update decoration based on theme
+      // Update decoration based on theme with character animation
       function updateDecoration() {
         const theme = getCurrentTheme();
-        decoration.textContent = theme === 'dark' ? DARK_DECORATION : LIGHT_DECORATION;
+        const text = theme === 'dark' ? DARK_DECORATION : LIGHT_DECORATION;
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (prefersReducedMotion) {
+          decoration.textContent = text;
+          return;
+        }
+
+        // Wrap each character in a span with staggered delay
+        decoration.innerHTML = [...text].map((char, i) =>
+          `<span class="char" style="animation-delay: ${0.3 + i * 0.05}s">${char}</span>`
+        ).join('');
       }
 
       // Set initial decoration
