@@ -2,10 +2,13 @@ A minimal contact page.
 
 ## Features
 
-- Light/dark mode via `prefers-color-scheme`
+- Light/dark mode via `prefers-color-scheme` + manual toggle
 - Live weather and local time display
 - Timezone delta for visitors
-- QR code modal for mobile sharing
+- QR code panel for mobile sharing
+- Finances panel with payment addresses and copy-to-clipboard
+- Signature panel with cryptographic verification
+- Privacy blur on sensitive fields (Signal, Instagram)
 - Staggered fade-in animations
 - No cookies, no analytics, no trackers
 
@@ -15,6 +18,7 @@ A minimal contact page.
 ├── index.html     # Page content and inline JS
 ├── styles.css     # All styles
 ├── qr.js          # QR code generator
+├── AGENTS.md      # AI assistant instructions
 └── README.md
 ```
 
