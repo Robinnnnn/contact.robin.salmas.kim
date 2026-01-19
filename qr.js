@@ -255,7 +255,7 @@
 
       let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgSize} ${svgSize}">`;
       const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const fgColor = isDark ? '#e5e5e5' : '#111';
+      const fgColor = isDark ? '#e5e5e5' : '#333';
 
       for (let row = 0; row < size; row++) {
         for (let col = 0; col < size; col++) {
@@ -279,17 +279,32 @@
   const qrCode = document.getElementById('qrCode');
   const qrUrl = document.getElementById('qrUrl');
   let qrGenerated = false;
+  let isAnimating = false;
 
   function toggleQR() {
+    if (isAnimating) return;
+
     const isActive = qrPanel.classList.contains('visible');
+    isAnimating = true;
 
     if (isActive) {
-      // Switch to contact list
-      qrPanel.classList.remove('visible');
-      nav.classList.remove('hidden');
+      // Switch to contact list: QR slides up, nav slides down
       btn.classList.remove('active');
+      qrPanel.classList.remove('visible');
+      qrPanel.classList.add('hiding');
+
+      setTimeout(() => {
+        qrPanel.classList.remove('hiding');
+        nav.classList.remove('hidden');
+        nav.classList.add('showing');
+
+        setTimeout(() => {
+          nav.classList.remove('showing');
+          isAnimating = false;
+        }, 300);
+      }, 300);
     } else {
-      // Switch to QR panel
+      // Switch to QR panel: nav slides up, QR slides down
       if (!qrGenerated) {
         const url = window.location.href;
         qrCode.innerHTML = generateQR(url);
@@ -297,9 +312,19 @@
         qrUrl.textContent = displayUrl.length > 40 ? displayUrl.slice(0, 37) + '...' : displayUrl;
         qrGenerated = true;
       }
-      nav.classList.add('hidden');
-      qrPanel.classList.add('visible');
+
       btn.classList.add('active');
+      nav.classList.add('hiding');
+
+      setTimeout(() => {
+        nav.classList.remove('hiding');
+        nav.classList.add('hidden');
+        qrPanel.classList.add('visible');
+
+        setTimeout(() => {
+          isAnimating = false;
+        }, 300);
+      }, 300);
     }
   }
 

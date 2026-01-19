@@ -349,9 +349,22 @@ nav {
   border-color: var(--text-primary);
 }
 
-/* Hide nav when QR mode is active */
+/* Nav animation for toggle */
+nav {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+nav.hiding {
+  animation: slideUpFadeOut 0.3s ease forwards;
+}
+
 nav.hidden {
   display: none;
+}
+
+nav.showing {
+  animation: slideFadeIn 0.3s ease forwards;
 }
 
 /* QR Panel (inline, replaces contact list) */
@@ -362,10 +375,29 @@ nav.hidden {
   justify-content: center;
   padding: 48px 0;
   gap: 24px;
+  opacity: 0;
+  transform: translateY(-8px);
 }
 
 .qr-panel.visible {
   display: flex;
+  animation: slideFadeIn 0.3s ease forwards;
+}
+
+.qr-panel.hiding {
+  display: flex;
+  animation: slideUpFadeOut 0.3s ease forwards;
+}
+
+@keyframes slideUpFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
 }
 
 .qr-code {
