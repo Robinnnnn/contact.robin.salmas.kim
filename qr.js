@@ -254,7 +254,8 @@
       const svgSize = (size + margin * 2) * cellSize;
 
       let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgSize} ${svgSize}">`;
-      const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const dataTheme = document.documentElement.getAttribute('data-theme');
+      const isDark = dataTheme === 'dark' || (dataTheme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
       const fgColor = isDark ? '#e5e5e5' : '#000';
 
       for (let row = 0; row < size; row++) {
