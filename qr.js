@@ -255,7 +255,7 @@
 
       let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgSize} ${svgSize}">`;
       const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const fgColor = isDark ? '#e5e5e5' : '#333';
+      const fgColor = isDark ? '#e5e5e5' : '#000';
 
       for (let row = 0; row < size; row++) {
         for (let col = 0; col < size; col++) {
@@ -279,7 +279,6 @@
   const qrCode = document.getElementById('qrCode');
   const qrUrl = document.getElementById('qrUrl');
   const rows = nav.querySelectorAll('.row');
-  let qrGenerated = false;
   let isAnimating = false;
 
   function staggerRows(show) {
@@ -315,13 +314,11 @@
       }, 150);
     } else {
       // Switch to QR panel: rows hide, QR slides down
-      if (!qrGenerated) {
-        const url = window.location.href;
-        qrCode.innerHTML = generateQR(url);
-        let displayUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
-        qrUrl.textContent = displayUrl.length > 40 ? displayUrl.slice(0, 37) + '...' : displayUrl;
-        qrGenerated = true;
-      }
+      // Always regenerate QR to ensure correct theme colors
+      const url = window.location.href;
+      qrCode.innerHTML = generateQR(url);
+      let displayUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+      qrUrl.textContent = displayUrl.length > 40 ? displayUrl.slice(0, 37) + '...' : displayUrl;
 
       btn.classList.add('active');
       staggerRows(false);
