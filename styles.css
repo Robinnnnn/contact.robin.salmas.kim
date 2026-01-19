@@ -264,6 +264,13 @@ nav {
   text-decoration: underline;
 }
 
+.censored {
+  color: var(--text-secondary);
+  filter: blur(3.5px);
+  user-select: none;
+  pointer-events: none;
+}
+
 .source-icon {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   font-size: 14px;
