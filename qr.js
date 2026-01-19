@@ -255,10 +255,7 @@
 
       let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgSize} ${svgSize}">`;
       const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const bgColor = isDark ? '#111' : '#fff';
       const fgColor = isDark ? '#e5e5e5' : '#111';
-
-      svg += `<rect width="100%" height="100%" fill="${bgColor}"/>`;
 
       for (let row = 0; row < size; row++) {
         for (let col = 0; col < size; col++) {
