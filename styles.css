@@ -59,7 +59,7 @@ body {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   font-size: 14px;
   line-height: 1.6;
-  padding: 80px 40px 40px;
+  padding: 80px 80px 40px 40px;
   max-width: 600px;
   margin: 0 auto;
   background: var(--bg);
@@ -69,19 +69,12 @@ body {
   min-height: 100vh;
 }
 
-/* Slow gradient drift layer */
+/* Background layer */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    var(--bg-gradient-start) 0%,
-    var(--bg-gradient-end) 50%,
-    var(--bg-gradient-start) 100%
-  );
-  background-size: 200% 200%;
-  animation: gradientDrift 20s linear infinite;
+  background: var(--bg);
   z-index: -2;
   pointer-events: none;
 }
@@ -97,22 +90,8 @@ body::after {
   opacity: 0.06;
   z-index: -1;
   pointer-events: none;
-  animation: grainStep 2s steps(1) infinite;
 }
 
-@keyframes gradientDrift {
-  0% { background-position: 0% 0%; }
-  50% { background-position: 100% 100%; }
-  100% { background-position: 0% 0%; }
-}
-
-@keyframes grainStep {
-  0% { background-position: 0 0; }
-  25% { background-position: 50px 50px; }
-  50% { background-position: -30px 20px; }
-  75% { background-position: 70px -40px; }
-  100% { background-position: 0 0; }
-}
 
 h1, .status, .status-line, .row, .row span, .row a, .util-btn, .qr-panel, .qr-url, .location-name {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
@@ -243,6 +222,10 @@ nav {
   body::after {
     animation: none;
   }
+  .sig-text {
+    clip-path: none;
+    animation: none;
+  }
 }
 
 .row span {
@@ -255,7 +238,6 @@ nav {
 .row a {
   color: var(--text-secondary);
   text-decoration: none;
-  flex: 1;
 }
 
 .row a:hover {
@@ -270,7 +252,7 @@ nav {
 
 @media (max-width: 480px) {
   body {
-    padding: 40px 20px 20px;
+    padding: 40px 50px 20px 20px;
   }
 
   .row {
@@ -368,12 +350,12 @@ nav.hidden {
 
 .qr-panel.visible {
   display: flex;
-  animation: slideFadeIn 0.15s ease forwards;
+  animation: slideFadeIn 0.3s ease forwards;
 }
 
 .qr-panel.hiding {
   display: flex;
-  animation: slideUpFadeOut 0.15s ease forwards;
+  animation: slideUpFadeOut 0.3s ease forwards;
 }
 
 @keyframes slideUpFadeOut {
@@ -522,7 +504,7 @@ nav.hidden {
 /* Signature Spine */
 .signature-spine {
   position: fixed;
-  right: calc(20px + env(safe-area-inset-right, 0px));
+  right: calc(18px + env(safe-area-inset-right, 0px));
   bottom: calc(80px + env(safe-area-inset-bottom, 0px));
   writing-mode: vertical-lr;
   transform: rotate(180deg);
@@ -536,11 +518,24 @@ nav.hidden {
 
 .sig-text {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-tertiary);
   letter-spacing: 0.5px;
   white-space: nowrap;
   transition: color 0.15s ease;
+  display: inline-block;
+  clip-path: inset(0 0 100% 0);
+  animation: revealUpward 0.8s ease forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes revealUpward {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 .signature-spine:hover .sig-text {
@@ -568,12 +563,12 @@ nav.hidden {
 
 .signature-panel.visible {
   display: flex;
-  animation: slideFadeIn 0.15s ease forwards;
+  animation: slideFadeIn 0.3s ease forwards;
 }
 
 .signature-panel.hiding {
   display: flex;
-  animation: slideUpFadeOut 0.15s ease forwards;
+  animation: slideUpFadeOut 0.3s ease forwards;
 }
 
 .signature-message {
@@ -599,7 +594,7 @@ nav.hidden {
 
 .signature-full {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.6;
   color: var(--text-tertiary);
   word-break: break-all;
@@ -608,7 +603,7 @@ nav.hidden {
 
 @media (max-width: 480px) {
   .signature-spine {
-    right: calc(20px + env(safe-area-inset-right, 0px));
+    right: calc(18px + env(safe-area-inset-right, 0px));
     bottom: calc(72px + env(safe-area-inset-bottom, 0px));
   }
 

@@ -280,6 +280,8 @@
   const qrPanel = document.getElementById('qrPanel');
   const qrCode = document.getElementById('qrCode');
   const qrUrl = document.getElementById('qrUrl');
+  const sigPanel = document.getElementById('signaturePanel');
+  const sigSpine = document.getElementById('signatureSpine');
   let isAnimating = false;
   let previousView = 'contact'; // Track which view was active before QR
 
@@ -310,13 +312,21 @@
       setTimeout(() => {
         qrPanel.classList.remove('hiding');
 
-        const targetNav = previousView === 'finances' ? financesNav : contactNav;
-        targetNav.classList.remove('hidden');
-        const rowCount = staggerRows(targetNav, true);
+        if (previousView === 'signature') {
+          sigSpine.classList.add('active');
+          sigPanel.classList.add('visible');
+          setTimeout(() => {
+            isAnimating = false;
+          }, 150);
+        } else {
+          const targetNav = previousView === 'finances' ? financesNav : contactNav;
+          targetNav.classList.remove('hidden');
+          const rowCount = staggerRows(targetNav, true);
 
-        setTimeout(() => {
-          isAnimating = false;
-        }, rowCount * 50 + 150);
+          setTimeout(() => {
+            isAnimating = false;
+          }, rowCount * 50 + 150);
+        }
       }, 150);
     } else {
       // Switch to QR panel: hide current view, QR slides down
@@ -326,22 +336,34 @@
       let displayUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
       qrUrl.textContent = displayUrl.length > 40 ? displayUrl.slice(0, 37) + '...' : displayUrl;
 
+      // Check if signature panel is active
+      const sigActive = sigPanel && sigPanel.classList.contains('visible');
+
       // Determine which view is currently active
       const financesActive = !financesNav.classList.contains('hidden');
-      previousView = financesActive ? 'finances' : 'contact';
-      const currentNav = financesActive ? financesNav : contactNav;
+
+      if (sigActive) {
+        previousView = 'signature';
+        sigSpine.classList.remove('active');
+        sigPanel.classList.remove('visible');
+        sigPanel.classList.add('hiding');
+        setTimeout(() => sigPanel.classList.remove('hiding'), 150);
+      } else {
+        previousView = financesActive ? 'finances' : 'contact';
+        const currentNav = financesActive ? financesNav : contactNav;
+        staggerRows(currentNav, false);
+        setTimeout(() => currentNav.classList.add('hidden'), 100);
+      }
 
       btn.classList.add('active');
-      staggerRows(currentNav, false);
 
       setTimeout(() => {
-        currentNav.classList.add('hidden');
         qrPanel.classList.add('visible');
 
         setTimeout(() => {
           isAnimating = false;
         }, 150);
-      }, 100);
+      }, sigActive ? 150 : 100);
     }
   }
 
