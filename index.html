@@ -9,7 +9,7 @@
 
   <title>contact robin</title>
 
-  <link rel="stylesheet" href="styles.css?v=20260118234033">
+  <link rel="stylesheet" href="styles.css?v=20260118234335">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
 </head>
 <body>
@@ -230,7 +230,7 @@ nonce: 7f3c9a2d</pre>
     </button>
   </div>
 
-  <script src="qr.js?v=20260118234033"></script>
+  <script src="qr.js?v=20260118234335"></script>
   <script>
     // Random title
     (function() {
@@ -257,8 +257,8 @@ nonce: 7f3c9a2d</pre>
     (function() {
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const statusItems = document.querySelectorAll('.status-header, .status-line');
-      const rows = document.querySelectorAll('.row');
-      const allItems = [...statusItems, ...rows];
+      const contactRows = document.querySelectorAll('nav:not(.finances-nav) .row');
+      const allItems = [...statusItems, ...contactRows];
 
       if (prefersReducedMotion) {
         allItems.forEach(item => item.classList.add('visible'));
