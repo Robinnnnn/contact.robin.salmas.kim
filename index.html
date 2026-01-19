@@ -9,7 +9,7 @@
 
   <title>contact robin</title>
 
-  <link rel="stylesheet" href="styles.css?v=20250118a">
+  <link rel="stylesheet" href="styles.css?v=20260118215022">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
 </head>
 <body>
@@ -70,6 +70,11 @@
       </div>
     </nav>
 
+    <!-- QR Panel (hidden by default) -->
+    <div class="qr-panel" id="qrPanel">
+      <div class="qr-code" id="qrCode" role="img" aria-label="QR code linking to this page"></div>
+      <div class="qr-url" id="qrUrl"></div>
+    </div>
   </main>
 
   <!-- Utility Buttons -->
@@ -85,25 +90,14 @@
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
       </svg>
     </button>
-    <button class="util-btn" aria-label="Show QR code" id="qrBtn">
+    <button class="util-btn" aria-label="Toggle QR code" id="qrBtn">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="14" width="3" height="3"/><rect x="14" y="18" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/>
       </svg>
     </button>
   </div>
 
-  <!-- QR Code Modal -->
-  <div class="qr-modal" id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrTitle">
-    <div class="qr-backdrop" id="qrBackdrop"></div>
-    <div class="qr-card">
-      <button class="qr-close" aria-label="Close" id="qrClose">&times;</button>
-      <h2 id="qrTitle" class="visually-hidden">QR Code</h2>
-      <div class="qr-code" id="qrCode" role="img" aria-label="QR code linking to this page"></div>
-      <div class="qr-url" id="qrUrl"></div>
-    </div>
-  </div>
-
-  <script src="qr.js?v=20250118a"></script>
+  <script src="qr.js?v=20260118215022"></script>
   <script>
     // Random title
     (function() {

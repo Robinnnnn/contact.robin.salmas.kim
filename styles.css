@@ -114,7 +114,7 @@ body::after {
   100% { background-position: 0 0; }
 }
 
-h1, .status, .status-line, .row, .row span, .row a, .util-btn, .qr-card, .qr-url, .location-name {
+h1, .status, .status-line, .row, .row span, .row a, .util-btn, .qr-panel, .qr-url, .location-name {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -200,6 +200,7 @@ nav {
   display: flex;
   flex-direction: column;
   margin-bottom: 32px;
+  transition: opacity 0.2s ease;
 }
 
 .row {
@@ -336,70 +337,39 @@ nav {
 [data-theme="dark"] .icon-sun { display: block; }
 [data-theme="dark"] .icon-moon { display: none; }
 
-/* QR Modal */
-.qr-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+/* QR Button active state */
+.util-btn.active {
+  background: var(--text-primary);
+  color: var(--bg);
+  border-color: var(--text-primary);
 }
 
-.qr-modal.visible {
-  opacity: 1;
-  visibility: visible;
+.util-btn.active:hover {
+  border-color: var(--text-primary);
 }
 
-.qr-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+/* Hide nav when QR mode is active */
+nav.hidden {
+  display: none;
 }
 
-.qr-card {
-  position: relative;
-  background: var(--bg);
-  padding: 32px;
-  border-radius: 4px;
-  display: flex;
+/* QR Panel (inline, replaces contact list) */
+.qr-panel {
+  display: none;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  max-width: calc(100vw - 40px);
-}
-
-.qr-close {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: var(--text-tertiary);
-  cursor: pointer;
-  line-height: 1;
+  padding: 48px 0;
+  gap: 24px;
 }
 
-.qr-close:hover {
-  color: var(--text-primary);
-}
-
-.qr-close:focus {
-  outline: none;
+.qr-panel.visible {
+  display: flex;
 }
 
 .qr-code {
-  width: 200px;
-  height: 200px;
+  width: 240px;
+  height: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -412,23 +382,11 @@ nav {
 
 .qr-url {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
-  max-width: 200px;
+  max-width: 280px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: center;
-}
-
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }

@@ -277,61 +277,34 @@
 
   // DOM Elements
   const btn = document.getElementById('qrBtn');
-  const modal = document.getElementById('qrModal');
-  const backdrop = document.getElementById('qrBackdrop');
-  const closeBtn = document.getElementById('qrClose');
+  const nav = document.querySelector('nav');
+  const qrPanel = document.getElementById('qrPanel');
   const qrCode = document.getElementById('qrCode');
   const qrUrl = document.getElementById('qrUrl');
-  let previousFocus = null;
+  let qrGenerated = false;
 
-  function openModal() {
-    previousFocus = document.activeElement;
+  function toggleQR() {
+    const isActive = qrPanel.classList.contains('visible');
 
-    // Generate QR for current URL
-    const url = window.location.href;
-    qrCode.innerHTML = generateQR(url);
-
-    // Display URL without protocol and trailing slash
-    let displayUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
-    qrUrl.textContent = displayUrl.length > 40 ? displayUrl.slice(0, 37) + '...' : displayUrl;
-
-    modal.classList.add('visible');
-    closeBtn.focus();
-  }
-
-  function closeModal() {
-    modal.classList.remove('visible');
-    if (previousFocus) previousFocus.focus();
-  }
-
-  // Focus trap
-  function trapFocus(e) {
-    if (!modal.classList.contains('visible')) return;
-
-    const focusable = modal.querySelectorAll('button');
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
+    if (isActive) {
+      // Switch to contact list
+      qrPanel.classList.remove('visible');
+      nav.classList.remove('hidden');
+      btn.classList.remove('active');
+    } else {
+      // Switch to QR panel
+      if (!qrGenerated) {
+        const url = window.location.href;
+        qrCode.innerHTML = generateQR(url);
+        let displayUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+        qrUrl.textContent = displayUrl.length > 40 ? displayUrl.slice(0, 37) + '...' : displayUrl;
+        qrGenerated = true;
+      }
+      nav.classList.add('hidden');
+      qrPanel.classList.add('visible');
+      btn.classList.add('active');
     }
   }
 
-  // Event listeners
-  btn.addEventListener('click', openModal);
-  closeBtn.addEventListener('click', closeModal);
-  backdrop.addEventListener('click', closeModal);
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('visible')) {
-      closeModal();
-    }
-    if (e.key === 'Tab' && modal.classList.contains('visible')) {
-      trapFocus(e);
-    }
-  });
+  btn.addEventListener('click', toggleQR);
 })();
