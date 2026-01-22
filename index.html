@@ -9,7 +9,7 @@
 
   <title>contact robin</title>
 
-  <link rel="stylesheet" href="styles.css?v=20260119003125">
+  <link rel="stylesheet" href="styles.css?v=20260122000005">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
 </head>
 <body>
@@ -230,7 +230,7 @@ nonce: 7f3c9a2d</pre>
     </button>
   </div>
 
-  <script src="qr.js?v=20260119003125"></script>
+  <script src="qr.js?v=20260122000005"></script>
   <script>
     // Random title
     (function() {
@@ -570,6 +570,18 @@ nonce: 7f3c9a2d</pre>
       }
 
       financeBtn.addEventListener('click', toggleFinances);
+    })();
+
+    // Truncate long addresses with middle ellipsis
+    (function() {
+      const TRUNCATE_THRESHOLD = 25;
+      const CHARS_EACH_SIDE = 6;
+      document.querySelectorAll('.copyable-value').forEach(el => {
+        const fullText = el.textContent;
+        if (fullText.length > TRUNCATE_THRESHOLD) {
+          el.textContent = fullText.slice(0, CHARS_EACH_SIDE) + '...' + fullText.slice(-CHARS_EACH_SIDE);
+        }
+      });
     })();
 
     // Copy to clipboard

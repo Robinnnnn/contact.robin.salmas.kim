@@ -59,7 +59,7 @@ body {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   font-size: 14px;
   line-height: 1.6;
-  padding: 80px 80px 40px 40px;
+  padding: 80px 60px 40px 60px;
   max-width: 600px;
   margin: 0 auto;
   background: var(--bg);
@@ -279,7 +279,7 @@ nav {
 
 @media (max-width: 480px) {
   body {
-    padding: 40px 50px 20px 20px;
+    padding: 40px 30px 20px 30px;
   }
 
   .row {
@@ -451,13 +451,10 @@ nav.hidden {
   width: auto !important;
   flex-shrink: 1;
   padding-right: 0 !important;
-  min-width: 0;
 }
 
 .copyable-value {
   color: var(--text-secondary) !important;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
   width: auto !important;
   flex-shrink: 1;
