@@ -260,6 +260,15 @@ nav {
   text-decoration: none;
 }
 
+.row a::after {
+  content: '\2197';
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 0.85em;
+  vertical-align: top;
+  color: var(--text-secondary);
+}
+
 .row a:hover {
   text-decoration: underline;
 }
